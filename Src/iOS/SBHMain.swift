@@ -25,13 +25,16 @@ import UIKit
 
 //===
 
+// base protocols
+
 protocol SBHStoryboardIDInferable { }
+protocol SBHStoryboard { }
 
 //===
 
-protocol SBHStoryboardVC { }
+// storyboard extention for instances
 
-extension SBHStoryboardVC where
+extension SBHStoryboard where
     Self: RawRepresentable /*expect enum*/,
     Self.RawValue == String /*expect enum based on String*/
 {
@@ -47,7 +50,11 @@ extension SBHStoryboardVC where
     }
 }
 
-extension SBHStoryboardVC
+//===
+
+// storyboard extentions for types
+
+extension SBHStoryboard
 {
     static func instantiateVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
     {

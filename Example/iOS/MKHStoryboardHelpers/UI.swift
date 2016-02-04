@@ -19,21 +19,21 @@ enum Storyboard // might be class or struct as well
     
     // storyboards:
     
-    enum Main: String, SBHStoryboardVC
+    enum Main: String, SBHStoryboard
     {
         // non-subclassed ViewControllers:
         
         case NextVC
     }
     
-    enum Second: String, SBHStoryboardVC
+    enum Second: String, SBHStoryboard
     {
         // non-subclassed ViewControllers:
         
         case SomeVC
     }
     
-    enum Third: SBHStoryboardVC // might be class or struct as well
+    enum Third: SBHStoryboard // might be class or struct as well
     {
         // this storyboard contains only initial VC,
         // so no need to define explicit IDs,
