@@ -29,50 +29,15 @@ protocol SBHStoryboardIDInferable { }
 
 //===
 
-protocol SBHStoryboard { }
-
-extension SBHStoryboard where
-    Self: RawRepresentable /*expect enum*/,
-    Self.RawValue == String /*expect enum based on String*/
-{
-    func instantiateVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
-    {
-        let storyboard = UIStoryboard(name: self.rawValue, bundle: nil)
-        let storyboardID = String(T)
-        
-        //===
-        
-        guard
-            let result = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? T
-        else
-        {
-            fatalError("Couldn't instantiate view controller with inferred identifier \(storyboardID)")
-        }
-        
-        //===
-        
-        return result
-    }
-}
-
-//===
-
-protocol SBHStoryboardVC
-{
-    typealias StoryboardType
-    
-    static var container: StoryboardType { get }
-}
+protocol SBHStoryboardVC { }
 
 extension SBHStoryboardVC where
     Self: RawRepresentable /*expect enum*/,
-    Self.RawValue == String /*expect enum based on String*/,
-    StoryboardType: RawRepresentable /*expect enum*/,
-    StoryboardType.RawValue == String /*expect enum based on String*/
+    Self.RawValue == String /*expect enum based on String*/
 {
     func instantiate() -> UIViewController
     {
-        let storyboard = UIStoryboard(name: Self.container.rawValue, bundle: nil)
+        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         let storyboardID = self.rawValue
         let result = storyboard.instantiateViewControllerWithIdentifier(storyboardID)
         
@@ -80,17 +45,20 @@ extension SBHStoryboardVC where
         
         return result
     }
-    
+}
+
+extension SBHStoryboardVC
+{
     static func instantiateVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
     {
-        let storyboard = UIStoryboard(name: Self.container.rawValue, bundle: nil)
+        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         let storyboardID = String(T)
         
         //===
         
         guard
             let result = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? T
-        else
+            else
         {
             fatalError("Couldn't instantiate view controller with inferred identifier \(storyboardID).")
         }
@@ -102,13 +70,13 @@ extension SBHStoryboardVC where
     
     static func instantiateInitialVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
     {
-        let storyboard = UIStoryboard(name: Self.container.rawValue, bundle: nil)
+        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         
         //===
         
         guard
             let result = storyboard.instantiateInitialViewController() as? T
-        else
+            else
         {
             fatalError("Couldn't instantiate initial view controller of inferred class \(String(T)).")
         }
@@ -120,13 +88,13 @@ extension SBHStoryboardVC where
     
     static func instantiateInitialVC() -> UIViewController
     {
-        let storyboard = UIStoryboard(name: Self.container.rawValue, bundle: nil)
+        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         
         //===
         
         guard
             let result = storyboard.instantiateInitialViewController()
-        else
+            else
         {
             fatalError("Couldn't instantiate initial view controller.")
         }

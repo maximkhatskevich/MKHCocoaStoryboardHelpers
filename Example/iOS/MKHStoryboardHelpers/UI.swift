@@ -10,36 +10,36 @@ import UIKit
 
 //===
 
-enum UI: String //, SBHStoryboard
+enum Storyboard // might be class or struct as well
 {
-    // storyboards:
-    
-    case Main, Second
+    // Consider to name this type just "UI" (to make it shorter and nicer to use)
+    // and use as UI objects factory, as UI router, etc.
     
     //===
     
-    // non-subclassed ViewControllers per storyboard:
+    // storyboards:
     
-    enum MainSB: String, SBHStoryboardVC
+    enum Main: String, SBHStoryboardVC
     {
-        static var container: UI { return .Main }
-        
-        //===
-        
         // non-subclassed ViewControllers:
         
         case NextVC
     }
     
-    enum SecondSB: String, SBHStoryboardVC
+    enum Second: String, SBHStoryboardVC
     {
-        static var container: UI { return .Second }
-        
-        //===
-        
         // non-subclassed ViewControllers:
         
         case SomeVC
+    }
+    
+    enum Third: SBHStoryboardVC // might be class or struct as well
+    {
+        // this storyboard contains only initial VC,
+        // so no need to define explicit IDs,
+        // 
+        // NOTE: this enum is should not declare a raw type,
+        // until it has at least one case (explicit ID).
     }
 }
 
@@ -56,7 +56,7 @@ class BaseVC: UIViewController
         // so we are allowed to infer desired storyboardID based on class name
         // and can use generic-based 'instantiateVC'
         
-        let modalVC: ModalVC = UI.MainSB.instantiateVC()
+        let modalVC: ModalVC = Storyboard.Main.instantiateVC()
         
         //===
         
@@ -68,7 +68,7 @@ class BaseVC: UIViewController
         // for next view controller we do NOT have custom UIViewController subclass,
         // so we have to define desired storyboardID explicitly
         
-        let nextVC = UI.MainSB.NextVC.instantiate()
+        let nextVC = Storyboard.Main.NextVC.instantiate()
         
         //===
         
@@ -80,11 +80,24 @@ class BaseVC: UIViewController
         // for some view controller we do NOT have custom UIViewController subclass as well,
         // so we have to define desired storyboardID explicitly
         
-        let someVC = UI.SecondSB.SomeVC.instantiate()
+        let someVC = Storyboard.Second.SomeVC.instantiate()
         
         //===
         
         navigationController?.pushViewController(someVC, animated: true)
+    }
+    
+    @IBAction func showThirdSBInitialHandler(sender: AnyObject)
+    {
+        // in Third storyboard we do not have explicit storyboardIDs or
+        // custom UIViewController subclasses assigned to view controllers,
+        // we only have initial view controller there
+        
+        let thirdInitialVC = Storyboard.Third.instantiateInitialVC()
+        
+        //===
+        
+        navigationController?.pushViewController(thirdInitialVC, animated: true)
     }
 }
 

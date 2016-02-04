@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		942D57101C62ECF100AD50DA /* Second.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 942D570F1C62ECF100AD50DA /* Second.storyboard */; };
+		942D57121C630CAF00AD50DA /* Third.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 942D57111C630CAF00AD50DA /* Third.storyboard */; };
 		944E9A3A1C62E42100F12998 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944E9A391C62E42100F12998 /* AppDelegate.swift */; };
 		944E9A3C1C62E42100F12998 /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944E9A3B1C62E42100F12998 /* UI.swift */; };
 		944E9A3F1C62E42100F12998 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 944E9A3D1C62E42100F12998 /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		942D570F1C62ECF100AD50DA /* Second.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Second.storyboard; sourceTree = "<group>"; };
+		942D57111C630CAF00AD50DA /* Third.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Third.storyboard; sourceTree = "<group>"; };
 		944E9A361C62E42100F12998 /* MKHStoryboardHelpers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MKHStoryboardHelpers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		944E9A391C62E42100F12998 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		944E9A3B1C62E42100F12998 /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				944E9A3B1C62E42100F12998 /* UI.swift */,
 				944E9A3D1C62E42100F12998 /* Main.storyboard */,
 				942D570F1C62ECF100AD50DA /* Second.storyboard */,
+				942D57111C630CAF00AD50DA /* Third.storyboard */,
 				944E9A401C62E42100F12998 /* Assets.xcassets */,
 				944E9A421C62E42100F12998 /* LaunchScreen.storyboard */,
 				944E9A451C62E42100F12998 /* Info.plist */,
@@ -141,6 +144,7 @@
 				944E9A441C62E42100F12998 /* LaunchScreen.storyboard in Resources */,
 				944E9A411C62E42100F12998 /* Assets.xcassets in Resources */,
 				944E9A3F1C62E42100F12998 /* Main.storyboard in Resources */,
+				942D57121C630CAF00AD50DA /* Third.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
