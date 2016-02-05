@@ -23,6 +23,57 @@
 
 import UIKit
 
+//=== MARK: Segue
+
+public protocol SBHStoryboardSegue: RawRepresentable { }
+
+//===
+
+extension SBHStoryboardSegue where
+    Self.RawValue == String /*expect enum based on String*/
+{
+    public init(from rawSegue: UIStoryboardSegue)
+    {
+        guard
+            let rawSegueID = rawSegue.identifier,
+            let result = Self(rawValue: rawSegueID)
+            else
+        {
+            fatalError("Invalid segue identifier \(rawSegue.identifier).")
+        }
+        
+        self = result
+    }
+    
+    public func perform(from sourceVC: UIViewController, sender: AnyObject?)
+    {
+        sourceVC.performSegueWithIdentifier(self.rawValue, sender: sender)
+    }
+}
+
+//=== MARK: ViewController (VC)
+
+public protocol SBHStoryboardIDInferable { }
+
+//===
+
+public protocol SBHStoryboardVC
+{
+    typealias SegueID: SBHStoryboardSegue
+}
+
+//===
+
+extension SBHStoryboardVC where
+    Self: UIViewController,
+    SegueID.RawValue == String
+{
+    public func performSegue(segueID: SegueID, sender: AnyObject?)
+    {
+        performSegueWithIdentifier(segueID.rawValue, sender: sender)
+    }
+}
+
 //=== MARK: Storyboard
 
 public protocol SBHStoryboard { }
@@ -58,7 +109,7 @@ extension SBHStoryboard
         
         guard
             let result = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? T
-        else
+            else
         {
             fatalError("Couldn't instantiate view controller with inferred identifier \(storyboardID).")
         }
@@ -76,7 +127,7 @@ extension SBHStoryboard
         
         guard
             let result = storyboard.instantiateInitialViewController() as? T
-        else
+            else
         {
             fatalError("Couldn't instantiate initial view controller of inferred class \(String(T)).")
         }
@@ -94,7 +145,7 @@ extension SBHStoryboard
         
         guard
             let result = storyboard.instantiateInitialViewController()
-        else
+            else
         {
             fatalError("Couldn't instantiate initial view controller.")
         }
@@ -102,56 +153,5 @@ extension SBHStoryboard
         //===
         
         return result
-    }
-}
-
-//=== MARK: ViewController (VC)
-
-public protocol SBHStoryboardIDInferable { }
-
-//===
-
-public protocol SBHStoryboardVC
-{
-    typealias SegueID: SBHStoryboardSegue
-}
-
-//===
-
-extension SBHStoryboardVC where
-    Self: UIViewController,
-    SegueID.RawValue == String
-{
-    public func performSegue(segueID: SegueID, sender: AnyObject?)
-    {
-        performSegueWithIdentifier(segueID.rawValue, sender: sender)
-    }
-}
-
-//=== MARK: Segue
-
-public protocol SBHStoryboardSegue: RawRepresentable { }
-
-//===
-
-extension SBHStoryboardSegue where
-    Self.RawValue == String /*expect enum based on String*/
-{
-    public init(from rawSegue: UIStoryboardSegue)
-    {
-        guard
-            let rawSegueID = rawSegue.identifier,
-            let result = Self(rawValue: rawSegueID)
-        else
-        {
-            fatalError("Invalid segue identifier \(rawSegue.identifier).")
-        }
-        
-        self = result
-    }
-    
-    public func perform(from sourceVC: UIViewController, sender: AnyObject?)
-    {
-        sourceVC.performSegueWithIdentifier(self.rawValue, sender: sender)
     }
 }
