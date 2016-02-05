@@ -40,13 +40,37 @@ enum Storyboard // might be class or struct as well
         // 
         // NOTE: this enum is should not declare a raw type,
         // until it has at least one case (explicit ID).
+        
+        //===
+        
+        // Here declare segues that are available
+        // inside this ("Third") storyboard,
+        // but defined inside non-subclassed VC.
+        //
+        // NOTE: the name of the type doesn't matter in this case.
+        
+        enum SegueID: String, SBHStoryboardSegue
+        {
+            case AnotherSegue
+        }
+        
+        // NOTE: you can group segue declarations
+        // into several separate types, it works too,
+        // just make sure every type conforms to 'SBHStoryboardSegue'
     }
 }
 
 //===
 
-class BaseVC: UIViewController
+class BaseVC: UIViewController, SBHStoryboardVC
 {
+    // MARK: Segue definition
+    
+    enum SegueID: String, SBHStoryboardSegue
+    {
+        case TheOneSegue
+    }
+    
     // MARK: IBActions
     
     @IBAction func showModalHandler(sender: AnyObject)
@@ -98,6 +122,37 @@ class BaseVC: UIViewController
         //===
         
         navigationController?.pushViewController(thirdInitialVC, animated: true)
+        
+        //===
+        
+        // lets push another VC right away,
+        // be sure to pass correct VC:
+        
+        Storyboard.Third.SegueID.AnotherSegue.perform(thirdInitialVC, sender: nil)
+    }
+    
+    @IBAction func callSegueHandler(sender: AnyObject)
+    {
+        performSegue(.TheOneSegue, sender: sender)
+        
+        //===
+        
+        // // alternative way to do the same,
+        // // when you call it outside of custom VC:
+        //
+        // let aVC = self
+        // SegueID.TheOneSegue.perform(aVC, sender: sender)
+    }
+    
+    // MARK: Overrided methods
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    {
+        switch SegueID.extract(segue)
+        {
+            case .TheOneSegue:
+                print("Segue with ID 'TheOneSegue' will be performed!")
+        }
     }
 }
 

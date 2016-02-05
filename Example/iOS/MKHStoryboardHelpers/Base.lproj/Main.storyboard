@@ -51,15 +51,24 @@
                                     <action selector="showThirdSBInitialHandler:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bQI-oD-ybu"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcG-9w-KcT">
+                                <rect key="frame" x="255" y="506" width="90" height="30"/>
+                                <state key="normal" title="CALL SEGUE"/>
+                                <connections>
+                                    <action selector="callSegueHandler:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1jn-oi-fQd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="JcG-9w-KcT" firstAttribute="top" secondItem="Qzk-or-cHR" secondAttribute="bottom" constant="38" id="0Gm-Tm-CIi"/>
                             <constraint firstItem="WnH-3g-5vc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Ms-Dp-eRP"/>
                             <constraint firstItem="Qzk-or-cHR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="193-ky-Shh"/>
                             <constraint firstItem="WnH-3g-5vc" firstAttribute="top" secondItem="5jR-Va-JkA" secondAttribute="bottom" constant="59" id="EGw-zB-tQN"/>
                             <constraint firstItem="5jR-Va-JkA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Vqh-iC-4c6"/>
                             <constraint firstItem="Maz-29-0Ag" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YZy-MH-WgR"/>
                             <constraint firstItem="czg-fJ-oUg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aYH-ax-v4p"/>
+                            <constraint firstItem="JcG-9w-KcT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bnX-jo-u3f"/>
                             <constraint firstItem="Qzk-or-cHR" firstAttribute="top" secondItem="czg-fJ-oUg" secondAttribute="bottom" constant="60" id="gZU-vz-yWB"/>
                             <constraint firstItem="5jR-Va-JkA" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="39" id="pc3-5v-6kM"/>
                             <constraint firstItem="czg-fJ-oUg" firstAttribute="top" secondItem="Maz-29-0Ag" secondAttribute="bottom" constant="51" id="sod-Vl-9yQ"/>
@@ -67,6 +76,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Yy5-MM-guC"/>
+                    <connections>
+                        <segue destination="8Vo-ns-wVE" kind="show" identifier="TheOneSegue" id="gmK-oW-bGB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -107,7 +119,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ec-r3-SmE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-171" y="1123"/>
+            <point key="canvasLocation" x="534" y="1144"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="2fz-eu-zX0">
@@ -156,6 +168,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qtI-Dk-mbv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-876" y="426"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="PtY-GA-glA">
+            <objects>
+                <viewController id="8Vo-ns-wVE" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rBo-aZ-Vgs"/>
+                        <viewControllerLayoutGuide type="bottom" id="L41-a3-IYm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7d0-9L-obs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PUSHED BY SEGUE VC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pDZ-mQ-rod">
+                                <rect key="frame" x="211" y="112" width="179" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pDZ-mQ-rod" firstAttribute="top" secondItem="rBo-aZ-Vgs" secondAttribute="bottom" constant="92" id="VWy-OY-umO"/>
+                            <constraint firstItem="pDZ-mQ-rod" firstAttribute="centerX" secondItem="7d0-9L-obs" secondAttribute="centerX" id="vAg-BN-bSE"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JDA-SI-6It" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-171" y="1144"/>
         </scene>
     </scenes>
 </document>

@@ -23,16 +23,11 @@
 
 import UIKit
 
-//===
+//=== MARK: Storyboard
 
-// base protocols
-
-protocol SBHStoryboardIDInferable { }
 protocol SBHStoryboard { }
 
 //===
-
-// storyboard extention for instances
 
 extension SBHStoryboard where
     Self: RawRepresentable /*expect enum*/,
@@ -52,8 +47,6 @@ extension SBHStoryboard where
 
 //===
 
-// storyboard extentions for types
-
 extension SBHStoryboard
 {
     static func instantiateVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
@@ -65,7 +58,7 @@ extension SBHStoryboard
         
         guard
             let result = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? T
-            else
+        else
         {
             fatalError("Couldn't instantiate view controller with inferred identifier \(storyboardID).")
         }
@@ -83,7 +76,7 @@ extension SBHStoryboard
         
         guard
             let result = storyboard.instantiateInitialViewController() as? T
-            else
+        else
         {
             fatalError("Couldn't instantiate initial view controller of inferred class \(String(T)).")
         }
@@ -101,7 +94,7 @@ extension SBHStoryboard
         
         guard
             let result = storyboard.instantiateInitialViewController()
-            else
+        else
         {
             fatalError("Couldn't instantiate initial view controller.")
         }
@@ -109,5 +102,56 @@ extension SBHStoryboard
         //===
         
         return result
+    }
+}
+
+//=== MARK: ViewController (VC)
+
+protocol SBHStoryboardIDInferable { }
+
+//===
+
+protocol SBHStoryboardVC
+{
+    typealias SegueID: SBHStoryboardSegue
+}
+
+//===
+
+extension SBHStoryboardVC where
+    Self: UIViewController,
+    SegueID.RawValue == String
+{
+    func performSegue(segueID: SegueID, sender: AnyObject?)
+    {
+        performSegueWithIdentifier(segueID.rawValue, sender: sender)
+    }
+}
+
+//=== MARK: Segue
+
+protocol SBHStoryboardSegue: RawRepresentable { }
+
+//===
+
+extension SBHStoryboardSegue where
+    Self.RawValue == String /*expect enum based on String*/
+{
+    static func extract(rawSegue: UIStoryboardSegue) -> Self
+    {
+        guard
+            let rawSegueID = rawSegue.identifier,
+            let result = Self(rawValue: rawSegueID)
+        else
+        {
+            fatalError("Invalid segue identifier \(rawSegue.identifier).")
+        }
+        
+        return result
+    }
+    
+    func perform(sourceVC: UIViewController, sender: AnyObject?)
+    {
+        sourceVC.performSegueWithIdentifier(self.rawValue, sender: sender)
     }
 }
