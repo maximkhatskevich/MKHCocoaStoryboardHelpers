@@ -25,7 +25,7 @@ import UIKit
 
 //=== MARK: Storyboard
 
-protocol SBHStoryboard { }
+public protocol SBHStoryboard { }
 
 //===
 
@@ -33,7 +33,7 @@ extension SBHStoryboard where
     Self: RawRepresentable /*expect enum*/,
     Self.RawValue == String /*expect enum based on String*/
 {
-    func instantiate() -> UIViewController
+    public func instantiate() -> UIViewController
     {
         let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         let storyboardID = self.rawValue
@@ -49,7 +49,7 @@ extension SBHStoryboard where
 
 extension SBHStoryboard
 {
-    static func instantiateVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
+    public static func instantiateVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
     {
         let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         let storyboardID = String(T)
@@ -68,7 +68,7 @@ extension SBHStoryboard
         return result
     }
     
-    static func instantiateInitialVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
+    public static func instantiateInitialVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
     {
         let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         
@@ -86,7 +86,7 @@ extension SBHStoryboard
         return result
     }
     
-    static func instantiateInitialVC() -> UIViewController
+    public static func instantiateInitialVC() -> UIViewController
     {
         let storyboard = UIStoryboard(name: String(Self), bundle: nil)
         
@@ -107,11 +107,11 @@ extension SBHStoryboard
 
 //=== MARK: ViewController (VC)
 
-protocol SBHStoryboardIDInferable { }
+public protocol SBHStoryboardIDInferable { }
 
 //===
 
-protocol SBHStoryboardVC
+public protocol SBHStoryboardVC
 {
     typealias SegueID: SBHStoryboardSegue
 }
@@ -122,7 +122,7 @@ extension SBHStoryboardVC where
     Self: UIViewController,
     SegueID.RawValue == String
 {
-    func performSegue(segueID: SegueID, sender: AnyObject?)
+    public func performSegue(segueID: SegueID, sender: AnyObject?)
     {
         performSegueWithIdentifier(segueID.rawValue, sender: sender)
     }
@@ -130,14 +130,14 @@ extension SBHStoryboardVC where
 
 //=== MARK: Segue
 
-protocol SBHStoryboardSegue: RawRepresentable { }
+public protocol SBHStoryboardSegue: RawRepresentable { }
 
 //===
 
 extension SBHStoryboardSegue where
     Self.RawValue == String /*expect enum based on String*/
 {
-    static func extract(rawSegue: UIStoryboardSegue) -> Self
+    public init(from rawSegue: UIStoryboardSegue)
     {
         guard
             let rawSegueID = rawSegue.identifier,
@@ -147,10 +147,10 @@ extension SBHStoryboardSegue where
             fatalError("Invalid segue identifier \(rawSegue.identifier).")
         }
         
-        return result
+        self = result
     }
     
-    func perform(sourceVC: UIViewController, sender: AnyObject?)
+    public func perform(from sourceVC: UIViewController, sender: AnyObject?)
     {
         sourceVC.performSegueWithIdentifier(self.rawValue, sender: sender)
     }

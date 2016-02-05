@@ -148,7 +148,7 @@ class BaseVC: UIViewController, SBHStoryboardVC
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
     {
-        switch SegueID.extract(segue)
+        switch SegueID(from: segue)
         {
             case .TheOneSegue:
                 print("Segue with ID 'TheOneSegue' will be performed!")
