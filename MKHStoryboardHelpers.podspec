@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name                      = 'MKHStoryboardHelpers'
-  s.version                   = '1.0.0'
+  s.version                   = '2.0.0'
   s.summary                   = 'Helpers for type-safe storyboard usage in Xcode projects'
   s.homepage                  = 'https://github.com/maximkhatskevich/#{s.name}'
   s.license                   = { :type => 'MIT', :file => 'LICENSE' }
