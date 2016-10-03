@@ -47,7 +47,7 @@ extension SBHStoryboardSegue where
     
     public func perform(from sourceVC: UIViewController, sender: AnyObject?)
     {
-        sourceVC.performSegueWithIdentifier(self.rawValue, sender: sender)
+        sourceVC.performSegue(withIdentifier: self.rawValue, sender: sender)
     }
 }
 
@@ -59,7 +59,7 @@ public protocol SBHStoryboardIDInferable { }
 
 public protocol SBHStoryboardVC
 {
-    typealias SegueID: SBHStoryboardSegue
+    associatedtype SegueID: SBHStoryboardSegue
 }
 
 //===
@@ -68,9 +68,9 @@ extension SBHStoryboardVC where
     Self: UIViewController,
     SegueID.RawValue == String
 {
-    public func performSegue(segueID: SegueID, sender: AnyObject?)
+    public func performSegue(_ segueID: SegueID, sender: AnyObject?)
     {
-        performSegueWithIdentifier(segueID.rawValue, sender: sender)
+        performSegue(withIdentifier: segueID.rawValue, sender: sender)
     }
 }
 
@@ -86,9 +86,11 @@ extension SBHStoryboard where
 {
     public func instantiate() -> UIViewController
     {
-        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
+        // http://stackoverflow.com/a/25345480/2312115
+        
+        let storyboard = UIStoryboard(name: String(describing: type(of: self)), bundle: nil)
         let storyboardID = self.rawValue
-        let result = storyboard.instantiateViewControllerWithIdentifier(storyboardID)
+        let result = storyboard.instantiateViewController(withIdentifier: storyboardID)
         
         //===
         
@@ -100,15 +102,25 @@ extension SBHStoryboard where
 
 extension SBHStoryboard
 {
-    public static func instantiateVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
+    private
+    static
+    func storyboardName() -> String
     {
-        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
-        let storyboardID = String(T)
+        return
+            String(describing: type(of: self))
+                .components(separatedBy: ".")
+                .first!
+    }
+    
+    public static func instantiateVC<T: UIViewController>() -> T where T: SBHStoryboardIDInferable
+    {
+        let storyboard = UIStoryboard(name: storyboardName(), bundle: nil)
+        let storyboardID = String(describing: T.self)
         
         //===
         
         guard
-            let result = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? T
+            let result = storyboard.instantiateViewController(withIdentifier: storyboardID) as? T
             else
         {
             fatalError("Couldn't instantiate view controller with inferred identifier \(storyboardID).")
@@ -119,9 +131,9 @@ extension SBHStoryboard
         return result
     }
     
-    public static func instantiateInitialVC<T: UIViewController where T: SBHStoryboardIDInferable>() -> T
+    public static func instantiateInitialVC<T: UIViewController>() -> T where T: SBHStoryboardIDInferable
     {
-        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
+        let storyboard = UIStoryboard(name: storyboardName(), bundle: nil)
         
         //===
         
@@ -129,7 +141,7 @@ extension SBHStoryboard
             let result = storyboard.instantiateInitialViewController() as? T
             else
         {
-            fatalError("Couldn't instantiate initial view controller of inferred class \(String(T)).")
+            fatalError("Couldn't instantiate initial view controller of inferred class \(String(describing: T.self)).")
         }
         
         //===
@@ -139,7 +151,7 @@ extension SBHStoryboard
     
     public static func instantiateInitialVC() -> UIViewController
     {
-        let storyboard = UIStoryboard(name: String(Self), bundle: nil)
+        let storyboard = UIStoryboard(name: storyboardName(), bundle: nil)
         
         //===
         

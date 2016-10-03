@@ -73,7 +73,7 @@ class BaseVC: UIViewController, SBHStoryboardVC
     
     // MARK: IBActions
     
-    @IBAction func showModalHandler(sender: AnyObject)
+    @IBAction func showModalHandler(_ sender: AnyObject)
     {
         // for modal view controller we have custom UIViewController subclass
         // 'ModalVC', which also conforms to protocol 'SBHStoryboardIDInferable',
@@ -84,10 +84,10 @@ class BaseVC: UIViewController, SBHStoryboardVC
         
         //===
         
-        presentViewController(modalVC, animated: true, completion: nil)
+        present(modalVC, animated: true, completion: nil)
     }
     
-    @IBAction func showNextHandler(sender: AnyObject)
+    @IBAction func showNextHandler(_ sender: AnyObject)
     {
         // for next view controller we do NOT have custom UIViewController subclass,
         // so we have to define desired storyboardID explicitly
@@ -99,7 +99,7 @@ class BaseVC: UIViewController, SBHStoryboardVC
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    @IBAction func showSomeHandler(sender: AnyObject)
+    @IBAction func showSomeHandler(_ sender: AnyObject)
     {
         // for some view controller we do NOT have custom UIViewController subclass as well,
         // so we have to define desired storyboardID explicitly
@@ -111,7 +111,7 @@ class BaseVC: UIViewController, SBHStoryboardVC
         navigationController?.pushViewController(someVC, animated: true)
     }
     
-    @IBAction func showThirdSBInitialHandler(sender: AnyObject)
+    @IBAction func showThirdSBInitialHandler(_ sender: AnyObject)
     {
         // in Third storyboard we do not have explicit storyboardIDs or
         // custom UIViewController subclasses assigned to view controllers,
@@ -128,10 +128,10 @@ class BaseVC: UIViewController, SBHStoryboardVC
         // lets push another VC right away,
         // be sure to pass correct VC:
         
-        Storyboard.Third.SegueID.AnotherSegue.perform(thirdInitialVC, sender: nil)
+        Storyboard.Third.SegueID.AnotherSegue.perform(from: thirdInitialVC, sender: nil)
     }
     
-    @IBAction func callSegueHandler(sender: AnyObject)
+    @IBAction func callSegueHandler(_ sender: AnyObject)
     {
         performSegue(.TheOneSegue, sender: sender)
         
@@ -146,7 +146,7 @@ class BaseVC: UIViewController, SBHStoryboardVC
     
     // MARK: Overrided methods
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         switch SegueID(from: segue)
         {
@@ -160,8 +160,8 @@ class BaseVC: UIViewController, SBHStoryboardVC
 
 class ModalVC: UIViewController, SBHStoryboardIDInferable
 {
-    @IBAction func dismissHandler(sender: AnyObject)
+    @IBAction func dismissHandler(_ sender: AnyObject)
     {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
